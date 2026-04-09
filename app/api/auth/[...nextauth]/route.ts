@@ -1,22 +1,46 @@
-import { NextRequest, NextResponse } from "next/server";
-import NextAuth from "next-auth";
+import NextAuth from "next-auth"
+import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from "next-auth/providers/google"
+import InstagramProvider from "next-auth/providers/instagram";
+import FacebookProvider from "next-auth/providers/facebook";
+import  CredentialsProvider  from "next-auth/providers/credentials";
 
-const handler = NextAuth({
-    providers:[
-        CredentialsProvider({
-            name: 'Credentials',
-            credentials: {
-                username: {lable:'email', type: 'text', placeholder: "Enter Your Email"},
-                password: { label: 'password', type: 'password', placeholder: '' }
-            },
-            async authorize(credentials: any){
-                return{
-                    id: 'user registered'
-                }
+export const authOptions = {
+  // Configure one or more authentication providers
+  providers: [
+    CredentialsProvider({
+        name:"Email",
+        credentials:{
+            username: {lable: 'email', type: 'text', placeholder: 'email'},
+            password: {lable: 'passoword', type: 'password', placeholder: 'password'}
+        },
+        async authorize(credentials: any){
+
+            return{
+                id: 'user1'
             }
-        })
-    ],
-    secret: process.env.NEXTAUTH_SECRET
-})
+            
+        }
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID || "",
+      clientSecret: process.env.GITHUB_SECRET || "",
+    }),
+    GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID || "",
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
+    }),
+    InstagramProvider({
+    clientId: process.env.INSTAGRAM_CLIENT_ID || "",
+    clientSecret: process.env.INSTAGRAM_CLIENT_SECRET || ""
+    }),
+    FacebookProvider({
+    clientId: process.env.FACEBOOK_CLIENT_ID || "",
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET || ""
+    })
+  ],
+}
+
+const handler =  NextAuth(authOptions);
 
 export {handler as GET, handler as POST}
