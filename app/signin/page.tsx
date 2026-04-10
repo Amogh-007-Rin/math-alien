@@ -1,7 +1,46 @@
-export default function Signin(){
-    return(
-        <div>
-            signin
+"use client"
+
+import AuthButton from "@/components/AuthButton"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function Singin() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const router = useRouter();
+    return (
+        <div className="w-full h-screen flex">
+            <div className="h-screen w-[60%]">
+                <div className="h-screen w-full bg-[url('/images/background.jpg')] bg-cover bg-center">
+
+                </div>
+            </div>
+            <div className="h-screen w-[40%] bg-black text-white flex flex-col justify-center items-center">
+                <div className=" w-[60%] h-[20%] flex-col justify-center items-center bg-green-500 mx-5">
+                    <h2>SIGN IN</h2>
+                    <h6>Sign in with your credentials</h6>
+                </div>
+                <div className="flex flex-col justify-center items-center bg-red-400 gap-2 w-[60%] h-[20%]">
+                    <input type="email" name="email" id="email-field" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+                    <input type="password" name="password" id="password-field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+                    <AuthButton onclick={async () => {
+                        const res = await signIn("credentials", {
+                            email: email,
+                            password: password,
+                            redirect: false
+                        });
+                        console.log("controller Reached")
+                        console.log(email, password)
+                        console.log(res);
+                        router.push("/")
+                    }}
+                        label="Login" />
+                </div>
+                <div className="w-[60%] h-[20%] bg-blue-400">
+
+                </div>
+            </div>
         </div>
     )
 }
