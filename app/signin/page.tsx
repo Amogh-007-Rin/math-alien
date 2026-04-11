@@ -2,6 +2,7 @@
 
 import AuthButton from "@/components/AuthButton"
 import ProvidersButton from "@/components/ProvidersButton";
+import SingInTable from "@/components/SignInTable";
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,29 +19,16 @@ export default function Singin() {
                 </div>
             </div>
             <div className="h-screen w-[40%] bg-black text-white flex flex-col justify-center items-center">
-                <div className=" w-[60%] h-[20%] flex-col justify-center items-center bg-green-500 mx-5">
+                <div className=" w-[60%] h-[20%] flex-col justify-center items-center mx-5">
                     <h2>SIGN IN</h2>
                     <h6>Sign in with your credentials</h6>
                 </div>
-                <div className="flex flex-col justify-center items-center bg-red-400 gap-2 w-[60%] h-[20%]">
-                    <input type="email" name="email" id="email-field" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-                    <input type="password" name="password" id="password-field" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
-                    <AuthButton onclick={async () => {
-                        const res = await signIn("credentials", {
-                            email: email,
-                            password: password,
-                            redirect: false
-                        });
-                        console.log("controller Reached")
-                        console.log(email, password)
-                        console.log(res);
-                        router.push("/")
-                    }}
-                        label="Login" />
+                <div className="flex flex-col justify-center items-center gap-2 w-[60%] h-[20%]">
+                    <SingInTable></SingInTable>
                 </div>
-                <div className="w-[60%] h-[20%] bg-blue-400 flex flex-col">
+                <div className="w-[60%] h-[20%] flex flex-col">
                     <p>Or continue with open account</p>
-                    <div className=" w-[90%] h-[90%] bg-amber-800 flex flex-col">
+                    <div className=" w-full h-full flex justify-evenly items-center">
                         <ProvidersButton label="google" providersOptions="google"/>
                         <ProvidersButton label="facebook" providersOptions="facebook"/>
                         <ProvidersButton label="github" providersOptions="github"/>
