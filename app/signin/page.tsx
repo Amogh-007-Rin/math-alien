@@ -1,6 +1,7 @@
 "use client"
 
 import AuthButton from "@/components/AuthButton"
+import ProvidersButton from "@/components/ProvidersButton";
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -37,8 +38,14 @@ export default function Singin() {
                     }}
                         label="Login" />
                 </div>
-                <div className="w-[60%] h-[20%] bg-blue-400">
-
+                <div className="w-[60%] h-[20%] bg-blue-400 flex flex-col">
+                    <p>Or continue with open account</p>
+                    <div className=" w-[90%] h-[90%] bg-amber-800 flex flex-col">
+                        <ProvidersButton label="google" providersOptions="google"/>
+                        <ProvidersButton label="facebook" providersOptions="facebook"/>
+                        <ProvidersButton label="github" providersOptions="github"/>
+                        <ProvidersButton label="instagram" providersOptions="instagram"/>
+                    </div>
                 </div>
             </div>
         </div>
